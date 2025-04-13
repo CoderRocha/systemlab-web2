@@ -44,6 +44,7 @@ const Navbar = () => {
                                 color: '#fff'
                             }
                         });
+                        localStorage.removeItem('user');
                         handleNavigate('/');
                     }}>
                         <FaSignOutAlt className={styles['navbar-icon']} />

@@ -52,6 +52,7 @@ const Home = () => {
                                 color: '#fff'
                             }
                         });
+                        localStorage.removeItem('user');
                         handleNavigate('/');
                     }}
                 >
