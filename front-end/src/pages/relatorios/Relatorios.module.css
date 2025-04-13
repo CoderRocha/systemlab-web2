@@ -1,0 +1,198 @@
+.btn {
+    background: none;
+    border: 2px solid #0097B2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #0097B2;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.btn:hover {
+    background: #0097B2;
+    color: #fff;
+}
+
+.listContainer {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table {
+    width: 800px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: small;
+}
+
+.table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #0097B2;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btnExcel {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+}
+
+.btnExcel:hover {
+    background-color: #45a049;
+}
+
+/* styles das Grids */
+.grids {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 30px;
+    /* reduzir o espaçamento */
+    margin-top: 30px;
+    justify-items: center;
+    align-items: stretch;
+    height: 500px;
+}
+
+/* styles de cada item das grids */
+.gridItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2rem;
+    background-color: rgba(4, 144, 169, 0.7);
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    /* aqui garante que todas tenham o mesmo tamanho */
+    min-height: auto;
+    width: 100%;
+    max-width: 300px;
+    /* limite para evitar grids muito largas */
+    overflow: hidden;
+}
+
+/* anim ao passar o mouse */
+.gridItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Cores das caixas das grids */
+.gridItem:nth-child(1) {
+    background-color: rgba(0, 120, 255, 0.85);
+}
+
+.gridItem:nth-child(2) {
+    background-color: rgba(220, 20, 60, 0.85);
+}
+
+.gridItem:nth-child(3) {
+    background-color: rgba(0, 150, 0, 0.85);
+}
+
+.gridItem:nth-child(4) {
+    background-color: rgba(0, 176, 240, 0.85);
+}
+
+.gridItem:nth-child(5) {
+    background-color: rgba(255, 77, 77, 0.85);
+}
+
+.gridItem:nth-child(6) {
+    background-color: rgba(0, 230, 118, 0.85);
+}
+
+/* styles do título */
+.gridItem h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* styles dos textos */
+.gridItem p {
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.gridItem2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    /* valor do gap para reduzir a distância entre os itens */
+}
+
+.gridItem2 p {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    margin: 0;
+    /* remover margem */
+    padding: 5px 10px;
+    /* ajustar o padding para diminuir o espaço interno */
+}

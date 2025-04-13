@@ -1,0 +1,63 @@
+.home-container {
+    margin: 10px auto;
+    width: 600px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: 300px 300px;
+    grid-row: auto auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.home-section {
+    width: 300px;
+    height: 200px;
+    background-image: url('../../assets/bgatendimentos.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.home-section.atendimentos {
+    background-image: url('../../assets/bgatendimentos.jpg');
+}
+
+.home-section.exames {
+    background-image: url('../../assets/bgexames.jpg');
+}
+
+.home-section.relatorios {
+    background-image: url('../../assets/bgrelatorios.jpg');
+}
+
+.home-section.sair {
+    background-image: url('../../assets/bgsair.jpg');
+}
+
+.home-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.home-section h2 {
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    font-size: 1.5rem;
+    text-align: center;
+    text-shadow:
+        1px 1px 0 #000,
+        -1px 1px 0 #000,
+        1px -1px 0 #000,
+        -1px -1px 0 #000;
+    transition: color 0.2s ease;
+}
+
+.home-section:hover h2 {
+    color: #0097B2;
+}

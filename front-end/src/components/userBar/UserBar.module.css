@@ -1,0 +1,60 @@
+.userbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: auto auto;
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
+    color: #333;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 1250px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.userbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    min-width: 150px;
+    flex-shrink: 0;
+    margin-right: 15%;
+}
+
+.user-name {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-unit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 150px;
+    flex-shrink: 0;
+}
+
+.user-select {
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    max-width: 180px;
+}
+
+.user-select:hover {
+    border-color: #666;
+}

@@ -1,0 +1,17 @@
+.footer-container {
+  text-align: center;
+  margin-top: 0px;
+}
+
+footer p {
+  font-weight: bold;
+  padding: 0px;
+  margin: 0px;
+}
+
+.footer-logo {
+  margin-top: 0px;
+  max-width: 60px;
+  width: auto;
+  height: auto;
+}

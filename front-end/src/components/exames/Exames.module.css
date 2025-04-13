@@ -1,0 +1,102 @@
+.btn {
+    background: none;
+    border: 2px solid #0097B2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #0097B2;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.btn:hover {
+    background: #0097B2;
+    color: #fff;
+}
+
+.btndelete {
+    background: none;
+    border: 2px solid #B2002C;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #B2002C;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.btndelete:hover {
+    background: #CC0033;
+    color: #fff;
+}
+
+.listContainer {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table {
+    width: 800px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: small;
+}
+
+.table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #0097B2;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btnExcel {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.btnExcel:hover {
+    background-color: #45a049;
+}

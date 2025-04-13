@@ -1,0 +1,112 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+input,
+select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #0097B2;
+    box-shadow: 0 0 3px rgba(0, 151, 178, 0.5);
+}
+
+.readOnlyInput {
+    background-color: #f9f9f9;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.exameInputGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.addExameBtn {
+    background: #009B44;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.liexame {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.addExameBtn:hover {
+    background: #007B2F;
+}
+
+.exameList {
+    margin-top: 10px;
+    list-style: none;
+    color: #555;
+    text-align: left;
+}
+
+.btn {
+    background: #0097B2;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    align-self: center;
+}
+
+.btn:hover {
+    background: #007a92;
+}
+
+.removeExameBtn {
+    cursor: pointer;
+    color: red;
+    margin-left: 10px;
+}
+
+.removeExameBtn:hover {
+    color: darkred;
+}
