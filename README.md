@@ -22,6 +22,14 @@ Foram utilizadas também algumas bibliotecas para complementar as tecnologias ci
 
 ## Funcionalidades
 
+### Login e Registro de Usuário
+
+O sistema possui um sistema de Login e Registro de Usuário, onde o usuário pode se autenticar para então, poder acessar o sistema.
+
+Se nenhum usuário estiver registrado, não será possível acessar as funcionalidades do sistema, sendo assim, necessário cadastrar um usuário para poder acessar o sistema por completo.
+
+Apenas as Telas de Login, Registro e Erro 404 serão disponíveis caso o usuário ainda não esteja logado.
+
 ### Listagem de Atendimentos
 
 Os usuários podem visualizar os atendimentos que já foram cadastrados no sistema, e visualizar informações como:
@@ -29,6 +37,8 @@ Os usuários podem visualizar os atendimentos que já foram cadastrados no siste
 - Número do Atendimento
 - Nome do Paciente
 - Ação (Deletar)
+
+É possível ter vários atendimentos com o mesmo nome, porém com códigos de atendimento diferentes.
 
 ### Cadastro de Atendimento
 
@@ -89,6 +99,8 @@ Após gerar o Relatório Geral, também é gerado logo abaixo dele um Dashboard 
 - Atendimentos por Sexo
 - Exames Realizados (Por Código de Exame)
 - Ticket Médio (R$)
+
+O Dashboard pode ser gerado mesmo que não tenha nenhuma informação cadastrada no sistema, porém, os dados não serão exibidos.
 
 ## Como Executar o Projeto?
 

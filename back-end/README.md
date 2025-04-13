@@ -22,7 +22,9 @@ Você pode acessar diretamente por esse Link: [http://localhost:5000](http://loc
 
 Agora que tanto o Front-End quanto o Back-End estão sendo executados corretamente, você pode utilizar o Sistema sem problemas.
 
-Para acessar os dados do Back-End, você pode acessar as seguintes URLs:
+## Endpoints
+
+Para acessar os dados do Back-End, você pode acessar as seguintes URLs de Endpoints:
 
 # Atendimentos
 
