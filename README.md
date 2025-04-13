@@ -2,7 +2,7 @@
 
 ## Sistema para Laboratórios de Análises Clínicas
 
-Esse projeto de Sistema para Laboratórios de Análises Clínicas (LIS) foi criado por mim, Guilherme Rocha, e batizei ele de "SystemLab Web 2.0". Ele é a versão mais atualizada do projeto "SystemLab Web", que também foi desenvolvido por mim.
+Esse projeto de Sistema para Laboratórios de Análises Clínicas (LIS) foi criado por mim, Guilherme Rocha, e batizei ele de "SystemLab Web v2.0". Ele é a versão mais atualizada do projeto "SystemLab Web", que também foi desenvolvido por mim.
 
 ## Tecnologias Utilizadas
 
