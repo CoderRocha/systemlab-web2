@@ -21,33 +21,92 @@ db.run(`CREATE TABLE IF NOT EXISTS users (
   password TEXT NOT NULL
 )`);
 
-// Login endpoint
+// Register endpoint
+app.post('/register', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({
+      success: false,
+      message: 'Por favor, preencha todos os campos.'
+    });
+  }
+
+  // Check if user exists using the existing users table
+  db.get('SELECT id FROM users WHERE username = ?', [username], (err, existingUser) => {
+    if (err) {
+      console.error('Erro ao verificar usuário:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Erro ao cadastrar usuário.'
+      });
+    }
+
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'Nome de usuário já está em uso.'
+      });
+    }
+
+    // Insert new user into the existing users table
+    db.run('INSERT INTO users (username, password) VALUES (?, ?)',
+      [username, password],
+      function (err) {
+        if (err) {
+          console.error('Erro ao cadastrar usuário:', err);
+          return res.status(500).json({
+            success: false,
+            message: 'Erro ao cadastrar usuário.'
+          });
+        }
+
+        res.status(201).json({
+          success: true,
+          message: 'Usuário cadastrado com sucesso!'
+        });
+      });
+  });
+});
+
+// Login endpoint - using the same users table
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  
-  const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
-  
-  db.get(sql, [username, password], (err, user) => {
-    if (err) {
-      console.error('Erro ao verificar usuário:', err.message);
-      return res.status(500).json({ message: 'Erro ao fazer login.' });
-    }
-    
-    if (user) {
-      res.status(200).json({ 
-        success: true, 
-        user: {
-          id: user.id,
-          username: user.username
-        }
-      });
-    } else {
-      res.status(401).json({ 
-        success: false, 
-        message: 'Usuário ou senha inválidos.' 
-      });
-    }
-  });
+
+  if (!username || !password) {
+    return res.status(400).json({
+      success: false,
+      message: 'Por favor, preencha todos os campos.'
+    });
+  }
+
+  // Query the existing users table
+  db.get('SELECT id, username FROM users WHERE username = ? AND password = ?',
+    [username, password],
+    (err, user) => {
+      if (err) {
+        console.error('Erro ao verificar usuário:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Erro ao fazer login.'
+        });
+      }
+
+      if (user) {
+        res.json({
+          success: true,
+          user: {
+            id: user.id,
+            username: user.username
+          }
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: 'Usuário ou senha inválidos.'
+        });
+      }
+    });
 });
 
 // Add a test user if none exists
@@ -57,15 +116,15 @@ db.get("SELECT * FROM users WHERE username = 'admin'", [], (err, row) => {
     return;
   }
   if (!row) {
-    db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, 
-      ['admin', 'admin123'], 
+    db.run(`INSERT INTO users (username, password) VALUES (?, ?)`,
+      ['admin', 'admin123'],
       (err) => {
         if (err) {
           console.error('Erro ao criar usuário de teste:', err);
         } else {
           console.log('Usuário de teste criado com sucesso!');
         }
-    });
+      });
   }
 });
 
