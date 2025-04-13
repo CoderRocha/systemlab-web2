@@ -15,6 +15,7 @@ import Relatorios from './pages/relatorios/Relatorios.js';
 import CadastrarAtendimento from './pages/cadastrarAtendimento/CadastrarAtendimento.js'
 import CadastrarExame from './pages/cadastrarExame/CadastrarExame.js';
 import ErrorPage from './components/error/ErrorPage.js';
+import ProtectedRoute from './components/protectedRoute/protectedRoute.js';
 
 function App() {
   return (
@@ -36,12 +37,36 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/registrar" element={<Registrar />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/atendimentos" element={<Atendimentos />} />
-            <Route path="/exames" element={<Exames />} />
-            <Route path="/relatorios" element={<Relatorios />} />
-            <Route path="/cadastraratendimento" element={<CadastrarAtendimento />} />
-            <Route path="/cadastrarexame" element={<CadastrarExame />} />
+            <Route path="/home" element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } />
+            <Route path="/atendimentos" element={
+              <ProtectedRoute>
+                <Atendimentos />
+              </ProtectedRoute>
+            } />
+            <Route path="/exames" element={
+              <ProtectedRoute>
+                <Exames />
+              </ProtectedRoute>
+            } />
+            <Route path="/relatorios" element={
+              <ProtectedRoute>
+                <Relatorios />
+              </ProtectedRoute>
+            } />
+            <Route path="/cadastraratendimento" element={
+              <ProtectedRoute>
+                <CadastrarAtendimento />
+              </ProtectedRoute>
+            } />
+            <Route path="/cadastrarexame" element={
+              <ProtectedRoute>
+                <CadastrarExame />
+              </ProtectedRoute>
+            } />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Router>
