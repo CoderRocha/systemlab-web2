@@ -20,24 +20,6 @@ db.serialize(() => {
         )
     `);
 
-    // Add default admin user if not exists
-    db.get("SELECT * FROM users WHERE username = 'admin'", [], (err, row) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        if (!row) {
-            db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, 
-                ['admin', 'admin123'], 
-                (err) => {
-                    if (err) {
-                        console.error('Erro ao criar usuário de teste:', err);
-                    } else {
-                        console.log('Usuário de teste criado com sucesso!');
-                    }
-            });
-        }
-    });
 });
 
 // criação das tabelas (se não tiverem sido criadas anteriormente)
