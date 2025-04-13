@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { FaFileExcel } from 'react-icons/fa';
 import * as XLSX from 'xlsx';
 
@@ -12,8 +13,10 @@ import Navbar from '../../components/navbar/Navbar';
 
 export default function Exames() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [exames, setExames] = useState([]);
   const [loading, setLoading] = useState(true);
+  const successShown = useRef(false);
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -33,27 +36,67 @@ export default function Exames() {
     fetchExames();
   }, []);
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.get('success') === 'true' && !successShown.current) {
+      successShown.current = true;
+      navigate('/exames', { replace: true });
+      setTimeout(() => {
+        toast.success('Exame cadastrado com sucesso!', {
+          style: {
+            background: '#0097B2',
+            color: '#fff'
+          }
+        })
+      }, 100);
+    }
+  }, [location, navigate]);
+
   // deletar um exame
   const handleDelete = async (codigoExame) => {
     try {
       const response = await axios.delete(`${backendUrl}/exames/${codigoExame}`);
       if (response.status === 200) {
         setExames(exames.filter((exame) => exame.codigo !== codigoExame)); // remove o exame deletado da lista
-        alert(response.data.message);
+        toast.success('Exame deletado com sucesso!', {
+          style: {
+            background: '#0097B2',
+            color: '#fff'
+          }
+        })
       }
     } catch (error) {
       console.error('Erro ao deletar exame:', error);
+      toast.error('Erro ao deletar exame!');
     }
   };
 
   // exportar a tabela de exames para Excel
   const downloadExcel = () => {
-    const ws = XLSX.utils.json_to_sheet(
-      exames.map(({ codigo, descricao, valor }) => ({ Código: codigo, Descrição: descricao, Valor: `R$ ${valor.toFixed(2)}` }))
-    );
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Exames');
-    XLSX.writeFile(wb, 'exames_cadastrados.xlsx');
+    try {
+      const ws = XLSX.utils.json_to_sheet(
+        exames.map(({ codigo, descricao, valor }) => ({
+          Código: codigo,
+          Descrição: descricao,
+          Valor: `R$ ${valor.toFixed(2)}`
+        }))
+      );
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Exames');
+      XLSX.writeFile(wb, 'exames_cadastrados.xlsx');
+
+      // Add success notification
+      toast.success('Lista de exames exportada com sucesso!', {
+        style: {
+          background: '#0097B2',
+          color: '#fff'
+        }
+      })
+    } catch (error) {
+      console.error('Erro ao exportar exames:', error);
+      // Add error notification
+      toast.error('Erro ao exportar lista de exames. Tente novamente!');
+    }
   };
 
   return (

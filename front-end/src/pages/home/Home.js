@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 //styles
 import styles from './Home.module.css';
@@ -44,7 +45,15 @@ const Home = () => {
 
                 <section
                     className={`${styles['home-section']} ${styles['sair']}`}
-                    onClick={() => handleNavigate('/')}
+                    onClick={() => {
+                        toast.success('Logout realizado com sucesso!', {
+                            style: {
+                                background: '#0097B2',
+                                color: '#fff'
+                            }
+                        });
+                        handleNavigate('/');
+                    }}
                 >
                     <h2>Sair</h2>
                 </section>

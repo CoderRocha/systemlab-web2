@@ -16,6 +16,7 @@ Esse projeto de Sistema para Laboratórios de Análises Clínicas (LIS) foi cria
 Foram utilizadas também algumas bibliotecas para complementar as tecnologias citadas acima, como por exemplo:
 
 - React-Icons (Icons para a U.I)
+- React-Toastify (Notificações para o Usuário)
 - Axios (Conexão HTTP com o Back-End)
 - XLSX (Exportar Tabelas em Excel)
 

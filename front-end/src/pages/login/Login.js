@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // styles
 import styles from './Login.module.css';
@@ -10,17 +11,15 @@ import BackgroundImage from '../../assets/login-background.jpg';
 function Login() {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
         setIsLoading(true);
 
         if (!user || !password) {
-            setError('Por favor, preencha todos os campos!');
+            toast.error('Por favor, preencha todos os campos!');
             setIsLoading(false);
             return;
         }
@@ -32,11 +31,18 @@ function Login() {
             });
 
             if (response.data.success) {
+                // Store user data in localStorage
                 localStorage.setItem('user', JSON.stringify(response.data.user));
+                toast.success('Login realizado com sucesso!', {
+                    style: {
+                        background: '#0097B2',
+                        color: '#fff'
+                    }
+                })
                 navigate('/home');
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Erro ao fazer login.');
+            toast.error(err.response?.data?.message || 'Usuário ou senha inválidos.');
             console.error('Login error:', err);
         } finally {
             setIsLoading(false);
@@ -52,7 +58,6 @@ function Login() {
                 <form onSubmit={handleSubmit} className={styles['login-form']}>
                     <img src={Logo} alt="SystemLab Web Logo" className={styles['logo']} />
                     <h2>Bem vindo!</h2>
-                    {error && <p className={styles.error}>{error}</p>}
                     <label>
                         <input
                             type="text"
@@ -72,8 +77,8 @@ function Login() {
                             required
                         />
                     </label>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className={styles['btn']}
                         disabled={isLoading}
                     >

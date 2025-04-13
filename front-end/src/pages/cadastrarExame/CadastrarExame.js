@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 //styles
 import styles from './CadastrarExame.module.css';
@@ -15,7 +16,7 @@ export default function CadastrarExame() {
     descricao: '',
     valor: '',
   });
-  const [errorMessage, setErrorMessage] = useState(''); // state para mensagem de erro
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,13 +25,15 @@ export default function CadastrarExame() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const codigoTrimmed = formData.codigo.trim(); // remover espaços antes e depois do código
     const descricaoTrimmed = formData.descricao.trim(); // remover espaços antes e depois da descrição
 
     // verifica se o código e a descrição são válidos (sem ser apenas espaços)
     if (!codigoTrimmed || !descricaoTrimmed) {
-      setErrorMessage('O código e a descrição não podem ser apenas espaços.');
+      toast.error('O código e a descrição não podem ser apenas espaços.');
+      setLoading(false);
       return;
     }
 
@@ -40,22 +43,28 @@ export default function CadastrarExame() {
 
       // se o código já existir, ele retornará com status 200
       if (response.status === 200) {
-        setErrorMessage('Este código de exame já está cadastrado.');
+        toast.error('Este código de exame já está cadastrado.');
+        setLoading(false);
         return; // barra o cadastro se o código já existe
       }
     } catch (error) {
       // se o código não for encontrado (erro 404), prosseguir com o cadastro
       if (error.response && error.response.status === 404) {
         // aqui envia os dados para o backend, agora com os valores tratados com o trim
-        const data = { ...formData, codigo: codigoTrimmed, descricao: descricaoTrimmed };
-        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/exames`, data);
-
-        // redirect para a página de exames cadastrados
-        navigate('/exames');
-        return;
+        try {
+          const data = { ...formData, codigo: codigoTrimmed, descricao: descricaoTrimmed };
+          await axios.post(`${process.env.REACT_APP_BACKEND_URL}/exames`, data);
+          
+          // Navigate with success parameter
+          navigate('/exames?success=true');
+        } catch (err) {
+          toast.error('Erro ao cadastrar exame. Tente novamente!');
+        }
+      } else {
+        toast.error('Erro ao verificar se o exame já está cadastrado. Tente novamente!');
       }
-      // caso ocorra algum outro erro inesperado
-      setErrorMessage('Erro ao verificar se o exame já está cadastrado. Tente novamente!');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,7 +73,6 @@ export default function CadastrarExame() {
       <Navbar />
       <div className={styles.container}>
         <h2>Cadastrar Exame</h2>
-        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label>Código do Exame</label>

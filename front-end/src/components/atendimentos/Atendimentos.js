@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify'
 
 // styles
 import styles from './Atendimentos.module.css';
@@ -10,8 +11,10 @@ import Navbar from '../../components/navbar/Navbar';
 
 export default function Atendimentos() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [atendimentos, setAtendimentos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const successShown = useRef(false); // Add this ref
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -21,6 +24,7 @@ export default function Atendimentos() {
       setAtendimentos(response.data.reverse());
     } catch (error) {
       console.error('Erro ao buscar atendimentos:', error);
+      toast.error('Erro ao carregar atendimentos!');
     } finally {
       setLoading(false);
     }
@@ -30,20 +34,40 @@ export default function Atendimentos() {
     fetchAtendimentos();
   }, []);
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.get('success') === 'true' && !successShown.current) {
+      successShown.current = true; // Mark as shown
+      navigate('/atendimentos', { replace: true });
+      setTimeout(() => {
+        toast.success('Atendimento cadastrado com sucesso!', {
+          style: {
+            background: '#0097B2',
+            color: '#fff'
+          }
+        })
+      }, 100);
+    }
+  }, [location, navigate]);
+
   const handleClick = () => {
     navigate('/cadastraratendimento');
   };
 
   const handleDelete = async (numeroAtendimento) => {
     try {
-      const response = await axios.delete(`${backendUrl}/atendimentos/${numeroAtendimento}`);
-      alert(response.data.message);
+      toast.success('Atendimento deletado com sucesso!', {
+        style: {
+          background: '#0097B2',
+          color: '#fff'
+        }
+      })
 
-      // updatte a lista de atendimentos e remove o atendimento deletado
+      // update a lista de atendimentos e remove o atendimento deletado
       setAtendimentos(atendimentos.filter(atendimento => atendimento.numero_atendimento !== numeroAtendimento));
     } catch (error) {
       console.error('Erro ao deletar atendimento:', error);
-      alert('Erro ao deletar atendimento');
+      toast.error('Erro ao deletar atendimento!');
     }
   };
 

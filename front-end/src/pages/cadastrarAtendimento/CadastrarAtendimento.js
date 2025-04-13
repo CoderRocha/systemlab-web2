@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // styles
 import styles from './CadastrarAtendimento.module.css';
@@ -53,15 +54,21 @@ export default function CadastrarAtendimento() {
           if (!exameJaExiste) {
             setFormData({ ...formData, exames: [...formData.exames, exameTrimmed] });
             setNovoExame(''); // clear o campo
+            toast.success('Exame adicionado!', {
+              style: {
+                background: '#0097B2',
+                color: '#fff'
+              }
+            })
           } else {
-            alert('Este exame já foi adicionado à lista.');
+            toast.warning('Este exame já foi adicionado à lista.');
           }
         }
       } catch (error) {
-        alert('Código de exame inválido ou não encontrado.');
+        toast.error('Código de exame inválido ou não encontrado.');
       }
     } else {
-      alert('Por favor, insira um código de exame válido.');
+      toast.warning('Por favor, insira um código de exame válido.');
     }
   };
 
@@ -85,7 +92,7 @@ export default function CadastrarAtendimento() {
       !formData.email.trim() ||
       !formData.celular.trim()
     ) {
-      alert('Por favor, preencha todos os campos corretamente.');
+      toast.error('Por favor, preencha todos os campos corretamente.');
       setLoading(false);
       return;
     }
@@ -100,10 +107,10 @@ export default function CadastrarAtendimento() {
       await axios.post(`${backendUrl}/atendimentos`, atendimentoData);
 
       // redirect para a página de atendimentos após salvar
-      navigate('/atendimentos');
+      navigate('/atendimentos?success=true');
     } catch (error) {
       console.error('Erro ao salvar atendimento:', error);
-      alert('Ocorreu um erro ao salvar o atendimento. Tente novamente.');
+      toast.error('Ocorreu um erro ao salvar o atendimento. Tente novamente.');
     } finally {
       setLoading(false); // finaliza o state de carregamento
     }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
+import { toast } from 'react-toastify';
 
 // styles
 import styles from './Relatorios.module.css';
@@ -22,8 +23,15 @@ export default function Relatorios() {
       const response = await axios.get(`${backendUrl}/relatorios`);
       setRelatorios(response.data.reverse());
       setReportGenerated(true); // aqui marca que o relatório foi gerado
+      toast.success('Relatório Excel gerado com sucesso!', {
+        style: {
+          background: '#0097B2',
+          color: '#fff'
+        }
+      })
     } catch (error) {
       console.error('Erro ao buscar relatórios:', error);
+      toast.error('Erro ao buscar relatórios!');
     } finally {
       setLoading(false);
     }
@@ -35,30 +43,48 @@ export default function Relatorios() {
   };
 
   const downloadExcel = () => {
-    // criar uma planilha do Excel a partir dos dados da tabela
-    const ws = XLSX.utils.json_to_sheet(relatorios);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Relatórios');
-
-    // gerar arquivo Excel e baixar
-    XLSX.writeFile(wb, 'relatorio_atendimentos.xlsx');
+    try {
+      const ws = XLSX.utils.json_to_sheet(relatorios);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Relatórios');
+      XLSX.writeFile(wb, 'relatorio_atendimentos.xlsx');
+      toast.success('Relatório Excel baixado com sucesso!', {
+        style: {
+          background: '#0097B2',
+          color: '#fff'
+        }
+      })
+    } catch (error) {
+      console.error('Erro ao baixar Excel:', error);
+      toast.error('Erro ao baixar relatório Excel. Tente novamente!');
+    }
   };
 
   const downloadDashboardExcel = () => {
-    const dashboardData = [
-      { Tipo: 'Total de Atendimentos', Quantidade: totalAtendimentos },
-      { Tipo: 'Total de Exames', Quantidade: totalExames },
-      { Tipo: 'Valor Total dos Exames', Quantidade: `R$ ${valorTotalExames.toFixed(2)}` },
-      { Tipo: 'Ticket Médio', Quantidade: `R$ ${ticketMedio}` },
-      ...atendimentosOrdenados.map(([sexo, quantidade]) => ({ Tipo: `Atendimentos - ${sexo}`, Quantidade: quantidade })),
-      ...Object.entries(examesRealizados).map(([exame, quantidade]) => ({ Tipo: `Exames - ${exame}`, Quantidade: quantidade })),
-    ];
+    try {
+      const dashboardData = [
+        { Tipo: 'Total de Atendimentos', Quantidade: totalAtendimentos },
+        { Tipo: 'Total de Exames', Quantidade: totalExames },
+        { Tipo: 'Valor Total dos Exames', Quantidade: `R$ ${valorTotalExames.toFixed(2)}` },
+        { Tipo: 'Ticket Médio', Quantidade: `R$ ${ticketMedio}` },
+        ...atendimentosOrdenados.map(([sexo, quantidade]) => ({ Tipo: `Atendimentos - ${sexo}`, Quantidade: quantidade })),
+        ...Object.entries(examesRealizados).map(([exame, quantidade]) => ({ Tipo: `Exames - ${exame}`, Quantidade: quantidade })),
+      ];
 
-    const ws = XLSX.utils.json_to_sheet(dashboardData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Dashboard');
-
-    XLSX.writeFile(wb, 'dashboards.xlsx');
+      const ws = XLSX.utils.json_to_sheet(dashboardData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Dashboard');
+      XLSX.writeFile(wb, 'dashboards.xlsx');
+      toast.success('Dashboard Excel baixado com sucesso!', {
+        style: {
+          background: '#0097B2',
+          color: '#fff'
+        }
+      })
+    } catch (error) {
+      console.error('Erro ao baixar Excel do dashboard:', error);
+      toast.error('Erro ao baixar dashboard Excel. Tente novamente!');
+    }
   };
 
 

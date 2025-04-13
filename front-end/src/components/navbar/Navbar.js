@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaClipboardList, FaFlask, FaChartBar, FaSignOutAlt } from 'react-icons/fa'; // Importando ícones
+import { toast } from 'react-toastify';
 import styles from './Navbar.module.css';
 import Logo from '../../assets/Systemlab-logo.png';
 
@@ -36,7 +37,15 @@ const Navbar = () => {
                         <FaChartBar className={styles['navbar-icon']} />
                         <span className={styles['navbar-link']}>Relatórios</span>
                     </li>
-                    <li className={styles['navbar-item']} onClick={() => handleNavigate('/')}>
+                    <li className={styles['navbar-item']} onClick={() => {
+                        toast.success('Logout realizado com sucesso!', {
+                            style: {
+                                background: '#0097B2',
+                                color: '#fff'
+                            }
+                        });
+                        handleNavigate('/');
+                    }}>
                         <FaSignOutAlt className={styles['navbar-icon']} />
                         <span className={styles['navbar-link']}>Sair</span>
                     </li>
