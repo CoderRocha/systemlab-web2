@@ -14,6 +14,61 @@ app.get('/', (req, res) => {
   res.send('API do Sistema está funcionando!');
 });
 
+// Create users table if it doesn't exist
+db.run(`CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL
+)`);
+
+// Login endpoint
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  
+  const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
+  
+  db.get(sql, [username, password], (err, user) => {
+    if (err) {
+      console.error('Erro ao verificar usuário:', err.message);
+      return res.status(500).json({ message: 'Erro ao fazer login.' });
+    }
+    
+    if (user) {
+      res.status(200).json({ 
+        success: true, 
+        user: {
+          id: user.id,
+          username: user.username
+        }
+      });
+    } else {
+      res.status(401).json({ 
+        success: false, 
+        message: 'Usuário ou senha inválidos.' 
+      });
+    }
+  });
+});
+
+// Add a test user if none exists
+db.get("SELECT * FROM users WHERE username = 'admin'", [], (err, row) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  if (!row) {
+    db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, 
+      ['admin', 'admin123'], 
+      (err) => {
+        if (err) {
+          console.error('Erro ao criar usuário de teste:', err);
+        } else {
+          console.log('Usuário de teste criado com sucesso!');
+        }
+    });
+  }
+});
+
 // endpoint para cadastrar um atendimento
 app.post('/atendimentos', (req, res) => {
   const { numeroAtendimento, nomePaciente, sexo, email, celular, exames } = req.body;
